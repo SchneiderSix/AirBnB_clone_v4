@@ -1,16 +1,30 @@
 #!/usr/bin/node
 window.onload = function() {
   const qs = document.querySelector('div.amenities h4');
-  //qs.innerHTML = "<b>foo</b>";
-  const checkbox = document.getElementsByClassName('ckbx');
-  const mydict = {};
+  const bx = document.getElementsByTagName("input");
+  const le = bx.length;
+  const arr = [];
 
-  checkbox.addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-      mydict[checkbox.dataset.id] = checkbox.dataset.name;
-    } else {
-      delete mydict[checkbox.dataset.id];
-    }
-  });
-  qs.innerHTML = mydict;
+  for (let i = 0; i < le; i++) {
+    let checkbox = document.getElementsByTagName("input")[i];
+    checkbox.addEventListener('change', (event) => {
+      if (event.currentTarget.checked) {
+        if (String(qs.innerHTML) === '&nbsp;') {
+          arr.push(checkbox.dataset.name);
+          qs.innerHTML = arr.join(', ');
+        } else {
+          arr.push(checkbox.dataset.name);
+          qs.innerHTML = arr.join(', ');
+        };
+      } else if (event.currentTarget.checked === false) {
+        const idx = arr.indexOf(checkbox.dataset.name);
+        arr.splice(idx, 1);
+        if (arr.length === 0) {
+          qs.innerHTML = '&nbsp;';
+        } else {
+          qs.innerHTML = arr.join(', ');
+        };
+      };
+    });
+  };
 };
