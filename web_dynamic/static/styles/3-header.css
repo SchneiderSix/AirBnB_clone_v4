@@ -10,7 +10,7 @@ header .logo {
     height: 100%;
 }
 header .available {
-    background: #ff545f;
+    background: #ff545f !important;
 }
 #api_status {
     margin-right: 15px;

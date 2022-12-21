@@ -27,16 +27,14 @@ window.onload = function() {
             };
           });
         };
-        const request = require('request');
-        request('http://0.0.0.0:5001/api/v1/status/', function (error, response) {
-          if (error) {
-            console.error('error:', error);
-          } else {
-            if (response.statusCode === "OK") {
-              const circle = document.querySelector('#api_status');
+        fetch('http://0.0.0.0:5001/api/v1/status/')
+          .then(function (response) {
+            const circle = document.querySelector('#api_status');
+            if (response.status === 'OK') {
               circle.classList.add('available');
+            } else {
+              circle.classList.remove('available');
             };
-          }
-        });
+          });
 };
       
