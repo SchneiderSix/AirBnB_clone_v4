@@ -27,14 +27,23 @@ window.onload = function() {
             };
           });
         };
-        fetch('http://0.0.0.0:5001/api/v1/status/')
-          .then(function (response) {
+
+        async function makeRequest() {
+          try {
+            const response = await fetch('http://0.0.0.0:5001/api/v1/status/');
+      
             const circle = document.querySelector('#api_status');
             if (response.status === 'OK') {
               circle.classList.add('available');
             } else {
               circle.classList.remove('available');
             };
-          });
+
+          } catch (err) {
+            console.log(err);
+          }
+        }
+  
+        makeRequest();
 };
       
