@@ -49,7 +49,7 @@ async function makeRequest() {
 
 makeRequest();
 
-fetch("http://0.0.0.0:5001/api/v1/places_search/", {
+fetch("http://localhost:5001/api/v1/places_search/", {
   method: "post",
   headers: {
     "Content-Type": "application/json",
@@ -60,6 +60,7 @@ fetch("http://0.0.0.0:5001/api/v1/places_search/", {
   .then((result) => result.json())
   .then((output) => {
     const pls = document.querySelector("selection.places");
+    alert(output);
     for (const place of output) {
       pls.innerHTML += `<article>
             <div class="title_box">
