@@ -49,44 +49,40 @@ async function makeRequest() {
 
 makeRequest();
 
-fetch("http://localhost:5001/api/v1/places_search/", {
-  method: "post",
-  headers: {
-    "Content-Type": "application/json",
-  },
+async function plsRequest() {
+  try {
+    const response = await fetch("http://localhost:5001/api/v1/places_search/");
 
-  body: JSON.stringify({}),
-})
-  .then((result) => result.json())
-  .then((output) => {
+    const data = await response.json();
+
     const pls = document.querySelector("selection.places");
-    alert(output);
-    for (const place of output) {
+
+    for (const place of data) {
       pls.innerHTML += `<article>
             <div class="title_box">
               <h2>${place.name}}</h2>
               <div class="price_by_night">$${place.price_by_night}</div>
             </div>
             <div class="information">
-              <div class="max_guest">${place.max_guest} Guest${
-        place.max_guest != 1 ? "s" : ""
-      }</div>
-                    <div class="number_rooms">${place.number_rooms} Bedroom${
-        place.number_rooms != 1 ? "s" : ""
-      }</div>
-                    <div class="number_bathrooms">${
-                      place.number_bathrooms
-                    } Bathroom${place.number_bathrooms != 1 ? "s" : ""}</div>
+              <div class="max_guest">${place.max_guest} Guest${place.max_guest != 1 ? "s" : ""
+        }</div>
+                    <div class="number_rooms">${place.number_rooms} Bedroom${place.number_rooms != 1 ? "s" : ""
+        }</div>
+                    <div class="number_bathrooms">${place.number_bathrooms
+        } Bathroom${place.number_bathrooms != 1 ? "s" : ""}</div>
             </div>
             <div class="user">
-                    <b>Owner:</b> ${place.user.first_name} ${
-        place.user.last_name
-      }
+                    <b>Owner:</b> ${place.user.first_name} ${place.user.last_name
+        }
                   </div>
                   <div class="description">
               ${place.description | safe}
                   </div>
           </article>`;
     }
-  })
-  .catch((err) => console.error(err));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+plsRequest();
