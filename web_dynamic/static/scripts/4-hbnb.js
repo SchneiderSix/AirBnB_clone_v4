@@ -60,7 +60,7 @@ async function plsRequest() {
 
     const data = await response.json();
 
-    const pls = document.querySelector("selection.places");
+    const pls = document.querySelector("section.places");
 
     for (const place of data) {
       pls.innerHTML += `<article>
