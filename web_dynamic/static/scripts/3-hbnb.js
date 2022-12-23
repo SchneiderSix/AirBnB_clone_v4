@@ -55,7 +55,7 @@ async function plsRequest() {
 
     const data = await response.json();
 
-    const pls = document.querySelector("selection.places");
+    const pls = document.querySelector("section.places");
 
     for (const place of data) {
       pls.innerHTML += `<article>
@@ -64,16 +64,20 @@ async function plsRequest() {
               <div class="price_by_night">$${place.price_by_night}</div>
             </div>
             <div class="information">
-              <div class="max_guest">${place.max_guest} Guest${place.max_guest != 1 ? "s" : ""
-        }</div>
-                    <div class="number_rooms">${place.number_rooms} Bedroom${place.number_rooms != 1 ? "s" : ""
-        }</div>
-                    <div class="number_bathrooms">${place.number_bathrooms
-        } Bathroom${place.number_bathrooms != 1 ? "s" : ""}</div>
+              <div class="max_guest">${place.max_guest} Guest${
+        place.max_guest != 1 ? "s" : ""
+      }</div>
+                    <div class="number_rooms">${place.number_rooms} Bedroom${
+        place.number_rooms != 1 ? "s" : ""
+      }</div>
+                    <div class="number_bathrooms">${
+                      place.number_bathrooms
+                    } Bathroom${place.number_bathrooms != 1 ? "s" : ""}</div>
             </div>
             <div class="user">
-                    <b>Owner:</b> ${place.user.first_name} ${place.user.last_name
-        }
+                    <b>Owner:</b> ${place.user.first_name} ${
+        place.user.last_name
+      }
                   </div>
                   <div class="description">
               ${place.description | safe}
