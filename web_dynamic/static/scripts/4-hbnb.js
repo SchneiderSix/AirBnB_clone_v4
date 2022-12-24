@@ -3,7 +3,7 @@ const qs = document.querySelector("div.amenities h4");
 const bx = document.getElementsByTagName("input");
 const le = bx.length;
 const arr = [];
-const arrId = [];
+const dicId = {};
 
 for (let i = 0; i < le; i++) {
   let checkbox = document.getElementsByTagName("input")[i];
@@ -11,7 +11,7 @@ for (let i = 0; i < le; i++) {
     if (event.currentTarget.checked) {
       if (String(qs.innerHTML) === "&nbsp;") {
         arr.push(checkbox.dataset.name);
-        arrId.push(checkbox.dataset.id);
+        dicId[dataset.id] = dataset.name;
         qs.innerHTML = arr.join(", ");
       } else {
         arr.push(checkbox.dataset.name);
@@ -21,8 +21,7 @@ for (let i = 0; i < le; i++) {
     } else if (event.currentTarget.checked === false) {
       const idx = arr.indexOf(checkbox.dataset.name);
       arr.splice(idx, 1);
-      const idxId = arrId.indexOf(checkbox.dataset.id);
-      arrId.splice(idxId, 1);
+      delete dicId[dataset.id];
       if (arr.length === 0) {
         qs.innerHTML = "&nbsp;";
       } else {
@@ -55,10 +54,17 @@ async function makeRequest() {
 makeRequest();
 
 function amenPost() {
+  fetch("http://localhost:5001/api/v1/places_search/", {})
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status != "OK") {
+        return;
+      }
+    });
   fetch("http://localhost:5001/api/v1/places_search/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amenities: arrId }),
+    body: JSON.stringify({ amenities: dicId }),
   })
     .then((response) => response.json())
     .then((data) => {
